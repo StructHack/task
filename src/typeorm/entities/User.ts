@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import {Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, DeepPartial} from 'typeorm';
+import {Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn} from 'typeorm';
 import { Task } from './Task';
 
 @Entity({name: 'users'})
@@ -19,10 +19,6 @@ export class User{
     name: string;
 
     @OneToOne(()=>Task)
-    @JoinColumn({ name: "taskId" })
+    @JoinColumn()
     task: Task
-
-    constructor(partial:DeepPartial<User>=null){
-        Object.assign(this,partial)
-    }
 }

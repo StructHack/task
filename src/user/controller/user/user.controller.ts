@@ -7,12 +7,12 @@ export class UserController {
     constructor(private userService:UserService){}
     @Get()
     getAllUsers(){
-        return 'get all users'
+        return this.userService.getUsers()
     }
 
     @Post(':id')
     createAUser(@Body() createUserdto:CreateUserDto, @Param('id') id: number){
-        return this.userService.getUsers(createUserdto, id)
+        return this.userService.createUsers(createUserdto, +id)
     }
 
 }

@@ -1,8 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { AddCategoryDto } from 'src/form/dto/add-category.dto';
 import { CreateFormDto } from 'src/form/dto/create-form.dto';
 import { FilterDto } from 'src/form/dto/filter-form.dto';
 import { UpdateFormDto } from 'src/form/dto/update-form.dto';
+import { Category } from 'src/typeorm/entities/Category';
 import { Task } from 'src/typeorm/entities/Task';
 import { User } from 'src/typeorm/entities/User';
 import { Repository } from 'typeorm';
@@ -11,7 +13,8 @@ import { Repository } from 'typeorm';
 export class FormService {
     constructor(
         @InjectRepository(Task) private taskRepository: Repository<Task>,
-        @InjectRepository(User) private userRepository: Repository<User>
+        @InjectRepository(User) private userRepository: Repository<User>,
+        @InjectRepository(Category) private categoryRepository: Repository<Category>,
     ){}
 
     findTasks(params:FilterDto){
@@ -28,6 +31,19 @@ export class FormService {
         const newTask = taskDetails;
         const data = this.taskRepository.save(newTask);
         return data
+    }
+
+    async addToCategory(categoryDetails: AddCategoryDto){
+        const task = await this.taskRepository.findOneBy({id: categoryDetails.task_id})
+        const category = await this.categoryRepository.findOneBy({id: categoryDetails.category_id})
+        if(!task || !category){
+            throw new HttpException('cant find id', HttpStatus.BAD_REQUEST)
+        }
+        task.category = category;
+        const data = this.taskRepository.save(task);
+        return data;
+
+        
     }
 
     updateTask(id: number, newTaskDetails: UpdateFormDto){

@@ -7,6 +7,8 @@ import { Task } from './typeorm/entities/Task';
 import { ConfigModule } from '@nestjs/config/dist';
 import { User } from './typeorm/entities/User';
 import { UserModule } from './user/user.module';
+import { CategoryModule } from './category/category.module';
+import { Category } from './typeorm/entities/Category';
 
 @Module({
   imports: [ConfigModule.forRoot(),TypeOrmModule.forRoot({
@@ -16,9 +18,9 @@ import { UserModule } from './user/user.module';
     username: process.env.DB_USERNAME,
     password: process.env.DB_PASSWORD,
     database: process.env.DB,
-    entities: [Task, User],
+    entities: [Task, User, Category],
     synchronize: true
-  }), FormModule, UserModule],
+  }), FormModule, UserModule, CategoryModule],
   controllers: [AppController],
   providers: [AppService],
 })

@@ -7,6 +7,7 @@ import { FormService } from 'src/form/services/form/form.service';
 import { Task } from 'src/typeorm/entities/Task';
 import { Request } from "express";
 import { FilterDto } from 'src/form/dto/filter-form.dto';
+import { AddCategoryDto } from 'src/form/dto/add-category.dto';
 
 @ApiTags('Forms')
 @Controller('forms')
@@ -65,5 +66,15 @@ export class FormController {
     })
     DeleteATask(@Param('id', ParseIntPipe) id: number){
         return this.formService.deleteTask(id)
+    }
+    @Post('/addtocategory')
+    @ApiCreatedResponse({
+        description: 'Added task to category',
+        type: Task
+    })
+    @ApiOperation({summary: 'Adds tasks to category'})
+
+    addToCategory(@Body() addinCategory: AddCategoryDto){
+        return this.formService.addToCategory(addinCategory)
     }
 }

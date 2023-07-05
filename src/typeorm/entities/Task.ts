@@ -1,6 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
-import {Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn} from 'typeorm';
+import {Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, ManyToOne} from 'typeorm';
 import { User } from './User';
+import { Category } from './Category';
+
 @Entity({name: 'task_details'})
 export class Task{
     @PrimaryGeneratedColumn()
@@ -31,4 +33,6 @@ export class Task{
     })
     type: string
 
+    @ManyToOne(()=>Category, (category)=>   category.id)
+    category:Category
 }
