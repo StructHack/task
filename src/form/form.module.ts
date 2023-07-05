@@ -3,9 +3,10 @@ import { FormController } from './controller/form/form.controller';
 import { FormService } from './services/form/form.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Task } from 'src/typeorm/entities/Task';
+import { User } from 'src/typeorm/entities/User';
 
 @Module({
-  imports:[TypeOrmModule.forFeature([Task])],
+  imports:[TypeOrmModule.forFeature([Task, User])],
   controllers: [FormController],
   providers: [FormService]
 })

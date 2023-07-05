@@ -6,13 +6,15 @@ export class FormInterceptor implements NestInterceptor{
     intercept(context: ExecutionContext, next: CallHandler<any>): Observable<any>{
         const ctx = context.switchToHttp();
         const request = ctx.getRequest<Request>()
-        console.log(request.params.limit)
         if(!request.query.limit){
-            request.query.limit = "1"
+            request.query.limit = process.env.FETCH_LIMIT
         }
         if(!request.query.skip){
-            request.query.skip = "0";
+            request.query.skip = process.env.FETCH_SKIP;
         }
+        // if(!request.query.order){
+        //     request.query.order = process.env.FETCH_ORDER
+        // }
         return next.handle()
     }
 }

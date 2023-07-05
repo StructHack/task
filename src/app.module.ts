@@ -4,18 +4,21 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { FormModule } from './form/form.module';
 import { Task } from './typeorm/entities/Task';
+import { ConfigModule } from '@nestjs/config/dist';
+import { User } from './typeorm/entities/User';
+import { UserModule } from './user/user.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot({
+  imports: [ConfigModule.forRoot(),TypeOrmModule.forRoot({
     type: 'mysql',
-    host: 'localhost',
-    port: 3306,
-    username: 'root',
-    password: '',
-    database: 'task01',
-    entities: [Task],
+    host: process.env.DB_HOST,
+    port: Number(process.env.DB_PORT),
+    username: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB,
+    entities: [Task, User],
     synchronize: true
-  }), FormModule],
+  }), FormModule, UserModule],
   controllers: [AppController],
   providers: [AppService],
 })
