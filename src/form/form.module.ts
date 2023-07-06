@@ -5,9 +5,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Task } from 'src/typeorm/entities/Task';
 import { User } from 'src/typeorm/entities/User';
 import { Category } from 'src/typeorm/entities/Category';
+import { Products } from 'src/typeorm/entities/Products';
 
 @Module({
-  imports:[TypeOrmModule.forFeature([Task, User, Category])],
+  imports:[TypeOrmModule.forFeature([Task, User, Category, Products])],
   controllers: [FormController],
   providers: [FormService]
 })

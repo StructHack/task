@@ -1,6 +1,8 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Task } from "./Task";
 import { ApiProperty } from "@nestjs/swagger";
+import { Product } from "puppeteer";
+import { Products } from "./Products";
 
 @Entity({name: 'category'})
 export class Category{
@@ -11,7 +13,7 @@ export class Category{
     })
     id:number
 
-    @Column()
+    @Column({unique:true})
     @ApiProperty({
         description: "category name goes here",
         example: "morning tasks"
@@ -19,5 +21,8 @@ export class Category{
     category:string
 
     @OneToMany(()=>Task,(task)=>task.id)
-    tasks:Task[]    
+    tasks:Task[]
+    
+    @OneToMany(()=>Products, (product)=>product.category)
+    products:Product[]
 }

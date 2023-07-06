@@ -2,7 +2,7 @@ import { Controller, Get, Post, Put, Delete, Body, Param,ParseIntPipe, Query, Us
 import { ApiCreatedResponse, ApiOperation, ApiParam, ApiProperty, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateFormDto } from 'src/form/dto/create-form.dto';
 import { UpdateFormDto } from 'src/form/dto/update-form.dto';
-import { FormInterceptor } from 'src/form/interceptors/form-interceptor';
+import { FormInterceptor } from 'src/interceptors/form-interceptor';
 import { FormService } from 'src/form/services/form/form.service';
 import { Task } from 'src/typeorm/entities/Task';
 import { Request } from "express";
