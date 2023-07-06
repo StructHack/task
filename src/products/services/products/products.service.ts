@@ -23,12 +23,17 @@ export class ProductsService {
     }
 
     async getProductsRaw(){
-        const data = await this.productRepository.query(`SELECT 
-        products.id, products.product_name, category.category 
+        let data = await this.productRepository.query(`SELECT 
+        products.id, products.product_name, category.id as "cat_id", category.category 
         FROM products  
         INNER JOIN category
         ON category.id = products.categoryId
         `)
+        for(let record of data){
+            record["category"] = {"id":record.cat_id, "category":record.category}
+            delete record.cat_id
+        }
+        console.log(data)
         return data;
     }
 
@@ -44,7 +49,7 @@ export class ProductsService {
 
     }
 
-    async createAProduct(productDetails: CreateProductDto){
+    async createAProduct(productDetails: Products){
         const product = productDetails
         console.log(product)
         const productCreate = this.productRepository.create(product)

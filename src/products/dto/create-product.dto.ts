@@ -11,4 +11,19 @@ export class CreateProductDto{
         example: "1"
     })
     category_id:number
+    
+    @ApiProperty({
+        description: "number of products",
+        example:2
+    })    
+    product_number: number
+
+    @ApiProperty({
+        description: "size of the product",
+        example:"XL"
+    })
+    product_size: string 
+
+    
+    
 }

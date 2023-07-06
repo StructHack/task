@@ -6,6 +6,7 @@ import { AddProducttoCategory } from 'src/products/dto/add-category.dto';
 import { CreateProductDto } from 'src/products/dto/create-product.dto';
 import { ProductsService } from 'src/products/services/products/products.service';
 import { Request } from 'express';
+import { Products } from 'src/typeorm/entities/Products';
 @ApiTags('Products')
 @Controller('products')
 export class ProductsController {
@@ -26,7 +27,7 @@ export class ProductsController {
 
     @Post()
     @ApiOperation({"summary": "post a product"})
-    createAProduct(@Body() productDetails: CreateProductDto){
+    createAProduct(@Body() productDetails: Products){
         return this.productsService.createAProduct(productDetails)
     }
 
